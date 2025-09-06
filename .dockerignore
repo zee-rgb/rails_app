@@ -1,0 +1,76 @@
+# General
+.git
+.gitignore
+.gitattributes
+.DS_Store
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Rails
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+# Ignore node_modules
+node_modules/
+
+# Ignore test files
+/spec/
+/test/
+
+# Ignore IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Ignore local development files
+.docker-sync/
+.docker/
+
+# Ignore database files
+db/*.sqlite3
+db/*.sqlite3-*
+
+# Ignore all logfiles and tempfiles
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+# Ignore pidfiles, but keep the directory
+/tmp/pids/*
+!/tmp/pids/
+!/tmp/pids/.keep
+
+# Ignore storage (uploaded files in development)
+/storage/*
+!/storage/.keep
+
+# Ignore master key for decrypting credentials and more
+/config/master.key
+
+# Ignore environment files
+.env*

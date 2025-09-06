@@ -1,0 +1,57 @@
+services:
+  web:
+    build:
+      context: ./rails_app
+      dockerfile: Dockerfile
+    volumes:
+      - ./rails_app:/app
+      - bundle_data:/bundle
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - redis
+      - ai_service
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/rails_app_development
+      - REDIS_URL=redis://redis:6379/1
+      - AI_SERVICE_URL=http://ai_service:8000
+
+  ai_service:
+    build: ./python_ai
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./python_ai:/app
+
+  db:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+  sidekiq:
+    build:
+      context: ./rails_app
+      dockerfile: Dockerfile
+    command: bash -c "bundle exec sidekiq"
+    volumes:
+      - ./rails_app:/app
+      - bundle_data:/bundle
+    depends_on:
+      - db
+      - redis
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/rails_app_development
+      - REDIS_URL=redis://redis:6379/1
+
+volumes:
+  postgres_data:
+  bundle_data:
